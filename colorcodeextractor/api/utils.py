@@ -1,7 +1,16 @@
 import cv2
 import numpy as np
 
+
+
+
 def extract_colors(image_data):
+
+    '''
+    Utils Function for extracting colors from the urine strips image using
+    OpenCV and Kmeans algorithm.
+    '''
+
     color_vals = {}
     img = cv2.cvtColor(image_data, cv2.COLOR_BGR2RGB)
     pixels = img.reshape((-1, 3))

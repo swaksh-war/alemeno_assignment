@@ -27,4 +27,5 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error("Network error : ", error)
         });
     });
+    
 });
