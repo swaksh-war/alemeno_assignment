@@ -1,9 +1,13 @@
 from django.core.files.uploadedfile import UploadedFile
+from django.contrib.auth import authenticate, login, logout
 
-from rest_framework.decorators import api_view, parser_classes
+
+from rest_framework.decorators import api_view, parser_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.status import *
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
 
 import cv2
 import numpy as np
@@ -43,4 +47,33 @@ def register_user(request):
             serializer.save()
             return Response(serializer.data, status=HTTP_201_CREATED)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
-    
+
+
+@api_view(['POST'])
+def user_login(request):
+    if request.method == 'POST':
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        user = None
+        if '@' in username:
+            try:
+                user = CustomUser.objects.get(email=username)
+            except ObjectDoesNotExist:
+                pass
+        
+        if not user:
+            user = authenticate(username=username, password=password)
+        
+        if user:
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({'token' : token.key}, status=HTTP_200_OK)
+        return Response({'error': 'Invalid Credentials'}, status=HTTP_401_UNAUTHORIZED)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def user_logout(request):
+    if request.method == 'POST':
+        request.user.auth_token.delete()
+        return Response({'message' : 'You are successfully logged out'}, status=HTTP_200_OK)
+    return Response({'message' : 'Error while logging out'}, status=HTTP_500_INTERNAL_SERVER_ERROR)
