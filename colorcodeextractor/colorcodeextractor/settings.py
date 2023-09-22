@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "api",
     "rest_framework",
     "corsheaders",
+    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+AUTH_USER_MODEL = 'api.CustomUser'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+}
