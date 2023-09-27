@@ -1,6 +1,6 @@
 from django.core.files.uploadedfile import UploadedFile
-from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth import authenticate
+from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework.decorators import api_view, parser_classes, permission_classes
 from rest_framework.response import Response
@@ -14,6 +14,7 @@ import numpy as np
 
 from . import utils
 from .serializers import UserSerializer
+from .models import CustomUser
 
 
 

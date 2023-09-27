@@ -4,16 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Color Code Extractor</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data">
-        <label>Urine Strip images</label>
-        <input type="file" name="image" id="imageInput"/>
-        <button type="submit">submit</button>
-    </form>
+    <div>
+        <ul id="navbar">
+            <li><button id="register">Register</button></li>
+            <li><button id="login">Login</button></li>
+            <li><button id="upload">Upload Stipe</button></li>
+            <li><button id="logoutButton">Logout</button></li>
+        </ul>
+    </div>
+    <div class="hidden" id="uploadContainer">
+        <form id="uploadForm" method="post" enctype="multipart/form-data">
+            <label>Urine Strip images</label>
+            <input type="file" name="image" id="imageInput"/>
+            <button type="submit">submit</button>
+        </form>
+    </div>
 
     <div>
         <p id="responseContainer"></p>
+    </div>
+
+    <div class="hidden" id="registerContainer">
+        <form method="post" id="registrationForm">
+            <label for="">username</label>
+            <input type="text" name="username" placeholder="Username"/>
+            <label>password</label>
+            <input type="password" name="password" placeholder="Password"/>
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Email"/>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <div class="hidden" id="loginContainer">
+        <form method = 'POST' id="loginForm">
+            <label>Username or Email</label>
+            <input type="text" name="username"/>
+            <label>Password</label>
+            <input type="password" name="password"/>
+            <button type="submit">Login</button>
+        </form>
     </div>
 
     <script src="index.js"></script>
